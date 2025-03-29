@@ -1,3 +1,5 @@
+/* eslint-disable react/prop-types */
+
 const Part = (props) => {
   return (
     <p>{props.parts.part} {props.parts.exercise}</p>
