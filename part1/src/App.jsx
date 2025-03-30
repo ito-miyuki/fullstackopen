@@ -1,8 +1,14 @@
 /* eslint-disable react/prop-types */
 
+import { useState } from "react";
+
+const Display = (props) => {
+  return (
+    <div>{props.counter}</div>
+  )
+}
+
 const Header = (props) => {
-  console.log(typeof(props));
-  console.log(props.course);
   return (
     <h1>{props.course.name}</h1>  
   )
@@ -30,14 +36,15 @@ const Part = (props) => {
   )
 }
 
-const App = () => {
-  // const course = 'Half Stack application development'
-  // const parts = [
-  //   {part: 'Fundamentals of React', exercise: 10},
-  //   {part: 'Using props to pass data', exercise: 2},
-  //   {part: 'State of a component', exercise: 14}
-  // ]
+const Button = (props) => {
+  return (
+    <button onClick={props.onClick}>
+        {props.text}
+    </button>
+  )
+}
 
+const App = () => {
   const course = {
     name: 'Half Stack application development',
     parts: [
@@ -56,11 +63,51 @@ const App = () => {
     ]
   }
 
+  const [counter, setCounter] = useState(0);
+
+  const increaseByOne = () => setCounter(counter + 1);
+  const decreaseByOne = () => setCounter(counter - 1);
+  const setToZero = () => setCounter(0);
+
+  const [left, setLeft] = useState(0)
+  const [right, setRight] = useState(0)
+
+  const handleReset = () => {
+    setLeft(0);
+    setRight(0);
+
+  }
   return (
     <div>
       <Header course={course} />
       <Content parts={course.parts} />
       <Total parts={course.parts} />
+      <Display counter={counter}/>
+      <Button
+        onClick={increaseByOne}
+        text="Plus"
+      />
+      <Button
+        onClick={decreaseByOne}
+        text="Minus"
+      />
+      <Button
+        onClick={setToZero}
+        text="Zero"
+      />
+      <div>
+        {left}
+        <button onClick={() => setLeft(left + 1)}>
+          left
+        </button>
+        <button onClick={handleReset}>
+          Reset
+        </button>
+        <button onClick={() => setRight(right + 1)}>
+          right
+        </button>
+        {right}
+      </div>
     </div>
   )
 }
