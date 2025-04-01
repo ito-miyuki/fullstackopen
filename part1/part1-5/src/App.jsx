@@ -36,11 +36,26 @@ const Part = (props) => {
   )
 }
 
-const Button = (props) => {
+// const Button = (props) => {
+//   return (
+//     <button onClick={props.onClick}>
+//         {props.text}
+//     </button>
+//   )
+// }
+
+const History = (props) => {
+  if (props.allClicks.length === 0) {
+    return (
+      <div>
+        the app is used by pressing the buttons
+      </div>
+    )
+  }
   return (
-    <button onClick={props.onClick}>
-        {props.text}
-    </button>
+    <div>
+      button press history: {props.allClicks.join(' ')}
+    </div>
   )
 }
 
@@ -69,14 +84,48 @@ const App = () => {
   const decreaseByOne = () => setCounter(counter - 1);
   const setToZero = () => setCounter(0);
 
+  // const [clicks, setClicks] = useState({left: 0, right: 0});
+  // const [left, setLeft] = useState(0);
+  // const [right, setRight] = useState(0);
+
+  // const handleLeftClick = () => {
+  //   const newClicks = {
+  //     ...clicks, // copy the clicks and rewrite only left
+  //     // right: clicks.right,
+  //     left: clicks.left + 1,
+  //   }
+  //   setClicks(newClicks)
+  // }
+
+  // const handleRightClick = () => {
+  //   const newClicks = {
+  //     ...clicks,
+  //     // left: clicks.left,
+  //     right: clicks.right + 1
+  //   }
+  //   setClicks(newClicks)
+  // }
+
+  // const handleReset = () => {
+  //   setClicks({left: 0, right: 0});
+  // }
+
   const [left, setLeft] = useState(0)
   const [right, setRight] = useState(0)
+  const [allClicks, setAll] = useState([])
 
-  const handleReset = () => {
-    setLeft(0);
-    setRight(0);
-
+  const handleLeftClick = () => {
+    setAll(allClicks.concat('L'))
+    setLeft(left + 1)
   }
+
+  const handleRightClick = () => {
+    setAll(allClicks.concat('R'))
+    setRight(right + 1)
+  }
+
+  const Button = ({onClick, text}) => <button onClick={onClick}>{text}</button>
+
   return (
     <div>
       <Header course={course} />
@@ -96,17 +145,23 @@ const App = () => {
         text="Zero"
       />
       <div>
-        {left}
-        <button onClick={() => setLeft(left + 1)}>
-          left
+        {/* {clicks.left}
+        <button onClick={handleLeftClick}>
+          Left
         </button>
         <button onClick={handleReset}>
           Reset
         </button>
-        <button onClick={() => setRight(right + 1)}>
-          right
+        <button onClick={handleRightClick}>
+          Right
         </button>
+        {clicks.right} */}
+        {left}
+        <button onClick={handleLeftClick}>left</button>
+        <button onClick={handleRightClick}>right</button>
         {right}
+        <History allClicks={allClicks}/>
+      <p>{allClicks.join(' ')}</p>
       </div>
     </div>
   )
