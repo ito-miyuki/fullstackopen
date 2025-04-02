@@ -11,7 +11,8 @@ const Button = (props) => {
 const StatisticsLine = (props) => {
   return (
     <tr>
-      <td>{props.text} {props.value}</td>
+      <td>{props.text}</td>
+      <td>{props.value} {props.suffix? '%': ''}</td>
     </tr>
   )
 }
@@ -26,13 +27,13 @@ const Statistics = (props) => {
   }
   return (
     <>
-      <tr>
-        <td>{props.textAve} {props.average / props.total}</td>
-      </tr>
-      <tr>
-        <td>{props.textPos} {props.good / props.total * 100} %</td>
-      </tr>
-    </>
+      <StatisticsLine text="good" value={props.good}/>
+      <StatisticsLine text="neutral" value={props.neutral}/>
+      <StatisticsLine text="bad" value={props.bad}/>
+      <StatisticsLine text="all" value={props.total}/>
+      <StatisticsLine text="average" value={props.average / props.total}/>
+      <StatisticsLine text="positive" value={props.good / props.total * 100} suffix="%"/>
+      </>
   )
 }
 
@@ -87,11 +88,13 @@ function App() {
       </div>
       <table>
         <tbody>
-          <StatisticsLine text="good" value={good}/>
-          <StatisticsLine text="neutral" value={neutral}/>
-          <StatisticsLine text="bad" value={bad}/>
-          <StatisticsLine text="all" value={total}/>
-          <Statistics textPos="positive" textAve="average" total={total} average={average} good={good}/>
+          <Statistics
+            good={good}
+            neutral={neutral}
+            bad={bad}
+            total={total}
+            average={average}
+          />
         </tbody>
       </table>
     </>
