@@ -31,8 +31,8 @@ const Statistics = (props) => {
       <StatisticsLine text="neutral" value={props.neutral}/>
       <StatisticsLine text="bad" value={props.bad}/>
       <StatisticsLine text="all" value={props.total}/>
-      <StatisticsLine text="average" value={props.average / props.total}/>
-      <StatisticsLine text="positive" value={props.good / props.total * 100} suffix="%"/>
+      <StatisticsLine text="average" value={(props.average / props.total).toFixed(2)}/>
+      <StatisticsLine text="positive" value={(props.good / props.total * 100).toFixed(2)} suffix="%"/>
       </>
   )
 }
